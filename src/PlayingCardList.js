@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useAxios from "./hooks/useAxios"
 import PlayingCard from "./PlayingCard";
 import "./PlayingCardList.css";
+import axios from "axios";
 
 /* Renders a list of playing cards.
  * Can also add a new card at random. */
 const PlayingCardList = () => {
-  const [cards, setCards] = useState();
-  
+  let initialState =[]
+  const [cards, setCards] = useState(initialState);
+
+
 let url =  "https://deckofcardsapi.com/api/deck/new/draw/" 
-    const ans = useAxios(url);
-    
-  console.log(ans)
-  console.log(ans)
+     let ans = useAxios(url);
+useEffect(()=>{
+  if (ans['response'] && ans['response']['data'] && ans['response']['data']['cards']
+  && ans['response']['data']['cards']['0'] && ans['response']['data']['cards']['0']['image']){
 
   setCards(ans['response']['data']['cards']['0']['image'])
+  
+   }}, [ans['response']['data']])
+   
+  console.log(cards)
+  console.log(ans)
+
   
   return (
   
@@ -25,7 +34,7 @@ let url =  "https://deckofcardsapi.com/api/deck/new/draw/"
       </div>
       <div className="PlayingCardList-card-area">
         
-          <PlayingCard front={cards}/>  
+ <PlayingCard front={cards}/>
     
       </div>
     </div>

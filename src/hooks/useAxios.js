@@ -11,7 +11,7 @@ const [isLoading, setIsLoading] = useState(true)
 useEffect(() => {    
  async function getData() {
     try{    
-        let res = await axios.get()
+        let res = await axios.get(url)
         // const json = res.json()
         console.log(res)
         setResponse(res);
@@ -25,7 +25,7 @@ useEffect(() => {
 }, []);
     console.log(response)
 
-    return {response, error, isLoading};
+    return {response};
 };
 
 
